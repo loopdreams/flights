@@ -59,6 +59,7 @@
 
 ;; (defn re-order-args [opts])
 
+;; TODO standardise keys in data outputs
 (defn handle-data-format [fmt data]
   (case fmt
     :edn data
@@ -80,7 +81,7 @@
     (:data opts)     (let [fmt (:data opts)
                            data (flight-data (:args args))]
                        (println (handle-data-format fmt data)))
-    :else            nil))
+    :else            "Nothing happened..."))
 
 (defn -main [input]
   (if (empty? input) (println help)
