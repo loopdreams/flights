@@ -26,9 +26,6 @@
           {}
           (sqlite/query db ["Select name, city, country from airports"])))
 
-(comment
-  (take 5 (make-query-space db)))
-
 (defn- suggest-match [query candidates]
   (let [[best-match cooef]
         (->>
@@ -60,12 +57,6 @@
     (-> (sqlite/query db q)
         first)))
 
-
-
-
-(comment
-  (get-data-by-query db "new york"))
-
 (defn airports-by-city-name [db city-query]
   (let [candidates (map :city (sqlite/query db "Select city from airports"))
         city       (suggest-match city-query candidates)
@@ -77,7 +68,6 @@
      :airports
      (->> (sqlite/query db query)
           (mapv (comp str/capitalize :name)))}))
-
 
 (defn cities-by-country-name [db country-query]
   (let [candidates (map :country (sqlite/query db "Select country from airports"))

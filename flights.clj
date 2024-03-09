@@ -5,9 +5,6 @@
 (require '[babashka.cli :as cli])
 (require '[cheshire.core :as json])
 
-(comment
-  (apply core/flight-message *command-line-args*))
-
 (def spec {:airports {:ref   "<city>"
                       :desc  "Lookup airports based on <city> query"
                       :alias :a}
@@ -37,7 +34,6 @@
     :json (json/generate-string data)
     (println "Not a valid data format, please use either :json or :edn")))
 
-
 (defn handle-opts [opts args]
   (cond
     (:cities opts)   (let [cities (core/cities-data (:cities opts))
@@ -54,9 +50,6 @@
                            data (core/flight-data (:args args))]
                        (println (handle-data-format fmt data)))
     :else            nil))
-
-
-
 
 (defn -main [input]
   (if (empty? input) (println help)

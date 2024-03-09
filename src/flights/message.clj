@@ -1,6 +1,7 @@
 (ns flights.message
   (:require [clojure.string :as str]))
 
+;; Formatting for the main printed outputs
 
 (defn- hours->hr-min [hours]
   (let [h (int hours)
