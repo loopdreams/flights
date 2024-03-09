@@ -61,7 +61,6 @@
         first)))
 
 
-(def query-find (partial get-data-by-query db))
 
 
 (comment
@@ -79,6 +78,7 @@
      (->> (sqlite/query db query)
           (mapv (comp str/capitalize :name)))}))
 
+
 (defn cities-by-country-name [db country-query]
   (let [candidates (map :country (sqlite/query db "Select country from airports"))
         country    (suggest-match country-query candidates)
@@ -91,3 +91,9 @@
      (->> (sqlite/query db query)
           (mapv (comp str/capitalize :city)))}))
 
+
+(def query-find (partial get-data-by-query db))
+
+(def query-airports (partial airports-by-city-name db))
+
+(def query-cities (partial cities-by-country-name db))
