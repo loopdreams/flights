@@ -1,9 +1,8 @@
-(ns flights.main
+(ns flights.core
   (:require [flights.distance :as distance]
             [flights.db :as db]
             [flights.message :as message]
-            [clojure.string :as str]
-            [clojure.pprint :as pprint]))
+            [clojure.string :as str]))
 
 
 (defn make-message [{:keys [distance] :as data}]
@@ -19,18 +18,28 @@
                     carbon-msg])
          "\n------------------------------------------------")))
 
-(defn -main [query1 query2]
-  (let [[loc1 loc2] (map db/query-find [query1 query2])]
-    
-    (if (and loc1 loc2)
 
-      (let [{:keys [origin destination carbon distance flight-time]}
-            (distance/calculate-flight-time loc1 loc2)]
-        (do
-          (println
-           (make-message (distance/generate-flight-data loc1 loc2)))
-          (clojure.pprint/pprint (distance/generate-flight-data loc1 loc2))))
-      (println (str "Not Found: " (if loc1 query2 query2))))))
+
+
+(defn cities-data [query]
+  (db/query-cities query))
+
+(defn airports-data [query]
+  (db/query-airports query))
+
+(defn flight-data [queries]
+  (let [[q1 q2] queries
+        [loc1 loc2] (map db/query-find queries)]
+    (if (and loc1 loc2)
+      (distance/generate-flight-data loc1 loc2)
+      (println (str "Not Found: " (if loc1 q2 q1))))))
+
+(defn flight-message [queries]
+  (make-message (flight-data queries)))
+
+
+
+
 
 (comment
-  (-main "john f kennedy" "dublin"))
+  (flight-message "john f kennedy" "dublin"))
