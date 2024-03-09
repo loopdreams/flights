@@ -8,7 +8,6 @@
     (str h (if (= 1 h) " hour, " " hours, ")
          mins (if (= 1 mins) " minute" " minutes"))))
 
-
 (defn- airport-location-str [{:keys [name city country]}]
   (str (str/capitalize name)
        " Airport in "
@@ -36,3 +35,13 @@
        (int co2-difference-recommended)
        (if (pos? co2-difference-recommended) "kg above " "kg below ")
        "the necessary average annual emissions recommended to stop climate change."))
+
+(defn city-names-msg [{:keys [country cities]}]
+  (str "The following cities have airports in " country
+       ":\n- "
+       (str/join "\n- " cities)))
+
+(defn airport-names-msg [{:keys [city airports]}]
+  (str "The following airports are in " city
+       ":\n- "
+       (str/join "\n- " airports)))
