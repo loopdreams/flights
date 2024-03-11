@@ -20,7 +20,7 @@ This software runs using `babashka`, a version of `clojure` that uses the `Graal
 
 Luckily, babashka is very easy to install with one line. [Details can be found here](https://github.com/babashka/babashka?tab=readme-ov-file#quickstart)
 
-To run the program, first clone this repo:
+Once babashka is installed, to run the program first clone this repo:
 
 ``` sh
 
@@ -28,7 +28,7 @@ git clone [repo-name]
 
 ```
 
-Then, just run `bb` followed by the name of the main file and the relevant arguments (detailed below).
+Then, `cd` into the repo and  just run `bb` followed by the name of the main file and the relevant arguments (detailed below).
 
 ``` sh
 bb airports 'New York' 'Paris'
@@ -39,7 +39,7 @@ bb airports 'New York' 'Paris'
 You can either use the script in a simple way by providing two arguments (and origin and destination), or with a few additional options.
 
 ### Flight Information
-For example, the follow query:
+For example, the following query:
 
 ``` sh
 bb flights 'Berlin' 'Madrid'
@@ -86,7 +86,7 @@ bb flights -c 'Germany'
 If you would like to use the functionality of this program within another pipeline, you can also request for it to return the response in either `json` or `edn` format by using the `-d` flag. For example:
 
 ``` sh
-bb flights -d :json 'Warsaw' 'Dublin'
+bb flights -d :json 'Warsaw' 'Dublin' | jq "."
 ```
 
 ## Adapting and Building

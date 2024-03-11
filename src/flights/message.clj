@@ -1,5 +1,6 @@
 (ns flights.message
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [flights.carbon :as carbon]))
 
 ;; Formatting for the main printed outputs
 
@@ -27,6 +28,42 @@
             [(str "Origin: " (airport-location-str origin))
              (str "Destination: " (airport-location-str destination))]))
 
+(defn city-names-msg [{:keys [country cities]}]
+  (str "The following cities have airports in " country
+       ":\n- "
+       (str/join "\n- " cities)))
+
+(defn airport-names-msg [{:keys [city airports]}]
+  (str "The following airports are in " city
+       ":\n- "
+       (str/join "\n- " airports)))
+
+
+(def bar-symbol (char 9632))
+
+(defn bar-string [percentage]
+  (let [len (* 50 (/ percentage 100))]
+    (str "[" (str/join (repeat len bar-symbol)) "]")))
+
+(def co2-annual-avg-bar (str (bar-string 100)
+                             " EU Person Annual Avg: "
+                             (int carbon/avg-person-annual-emissions)
+                             " kg"))
+
+(defn personal-co2-usage-bar [co2-personal co2-percentage]
+  (str
+   (bar-string co2-percentage)
+   " Carbon cost: " co2-personal " kg / "
+   co2-percentage "% of annual EU avg"))
+
+
+(defn recommended-co2-bar []
+  (str
+   (bar-string (* 100 (/ carbon/recommended-annual-avg carbon/avg-person-annual-emissions)))
+   " Recommended annual avg: " carbon/recommended-annual-avg
+   " kg"))
+
+
 (defn carbon-msg [{:keys [co2-personal co2-percentage-annual-avg
                           co2-difference-recommended]}]
   (str "Approximately " (int co2-personal)
@@ -37,12 +74,10 @@
        (if (pos? co2-difference-recommended) "kg above " "kg below ")
        "the necessary average annual emissions recommended to stop climate change."))
 
-(defn city-names-msg [{:keys [country cities]}]
-  (str "The following cities have airports in " country
-       ":\n- "
-       (str/join "\n- " cities)))
-
-(defn airport-names-msg [{:keys [city airports]}]
-  (str "The following airports are in " city
-       ":\n- "
-       (str/join "\n- " airports)))
+(defn carbon-msg-v2 [{:keys [co2-personal co2-percentage-annual-avg
+                             co2-difference-recommended]}]
+  (str/join "\n"
+            [co2-annual-avg-bar
+             (personal-co2-usage-bar co2-personal co2-percentage-annual-avg)
+             (recommended-co2-bar)]))
+             
