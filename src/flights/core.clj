@@ -10,7 +10,7 @@
   (let [loc-msg      (message/oirgin-and-destination-msg data)
         distance-msg (str "Approximate Distance: " (int distance) " km")
         time-msg     (message/flight-time-msg data)
-        carbon-msg   (message/carbon-msg-v2 data)]
+        carbon-msg   (message/carbon-msg data)]
     (str "------------------------------------------------\n"
          (str/join "\n\n"
                    [loc-msg

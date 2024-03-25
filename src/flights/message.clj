@@ -18,7 +18,7 @@
        (str/capitalize country)))
 
 (defn flight-time-msg [{:keys [flight-time]}]
-  (let [[upr lwr] (map hours->hr-min flight-time)]
+  (let [[lwr upr] (map hours->hr-min flight-time)]
     (str "Estimated Flight Time: Between " lwr
          " and "
          upr)))
@@ -63,21 +63,9 @@
    " Recommended annual avg: " carbon/recommended-annual-avg
    " kg"))
 
-
 (defn carbon-msg [{:keys [co2-personal co2-percentage-annual-avg
                           co2-difference-recommended]}]
-  (str "Approximately " (int co2-personal)
-       " kg of CO2 emitted, which is around "
-       co2-percentage-annual-avg
-       "% of a EU person's annual average emissions and "
-       (int co2-difference-recommended)
-       (if (pos? co2-difference-recommended) "kg above " "kg below ")
-       "the necessary average annual emissions recommended to stop climate change."))
-
-(defn carbon-msg-v2 [{:keys [co2-personal co2-percentage-annual-avg
-                             co2-difference-recommended]}]
   (str/join "\n"
-            [co2-annual-avg-bar
-             (personal-co2-usage-bar co2-personal co2-percentage-annual-avg)
+            [(personal-co2-usage-bar co2-personal co2-percentage-annual-avg)
+             co2-annual-avg-bar
              (recommended-co2-bar)]))
-             

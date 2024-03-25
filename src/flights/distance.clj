@@ -22,10 +22,10 @@
     (* R c)))
 
 (defn distance [location1 location2]
-  (let [lat1 (:lat_decimal location1)
-        lon1 (:lon_decimal location1)
-        lat2 (:lat_decimal location2)
-        lon2 (:lon_decimal location2)]
+  (let [lat1 (:lat-decimal location1)
+        lon1 (:lon-decimal location1)
+        lat2 (:lat-decimal location2)
+        lon2 (:lon-decimal location2)]
     (calculate-distance lat1 lon1 lat2 lon2)))
 
 
@@ -47,4 +47,4 @@
      :co2-difference-recommended diff-recommended
      :distance                   distance
      :flight-time                (map #(+ (/ distance %) take-off-and-landing-time)
-                                      air-speed)}))
+                                      (reverse air-speed))}))

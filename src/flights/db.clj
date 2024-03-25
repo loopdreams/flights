@@ -39,6 +39,20 @@
     (when (pos? cooef)
       best-match)))
 
+(defn snake->kebab
+  "Very loose function, used becase of known snake-case values in source data."
+  [key]
+  (let [name (name key)]
+    (->
+     (str/replace name "_" "-")
+     keyword)))
+
+(defn transform-keys-to-kebab-case
+  "For the sake of consistency in api outputs."
+  [m]
+  (let [ks (map snake->kebab (keys m))]
+    (zipmap ks (vals m))))
+
 
 (defn get-data-by-query [db query]
   (let [lookup              (make-query-space db)
@@ -54,7 +68,8 @@
                                        [:= :city city]
                                        [:= :country country]]})]
     (-> (sqlite/query db q)
-        first)))
+        first
+        transform-keys-to-kebab-case)))
 
 (defn airports-by-city-name [db city-query]
   (let [candidates (map :city (sqlite/query db "Select city from airports"))
