@@ -1,6 +1,5 @@
 (ns flights.carbon)
 
-
 ;; Avg 12 liters per KM
 (def avg-fuel-usage-per-km 12)
 

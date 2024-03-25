@@ -1,25 +1,16 @@
 (ns flights.db
-  (:require [babashka.pods :as pods]
-            [babashka.deps :as deps]
-            [babashka.fs :as fs]
+  (:require [babashka.fs :as fs]
+            [pod.babashka.go-sqlite3 :as sqlite]
+            [honeysql.core :as sql]
             [clojure.edn :as edn]
             [flights.fuzzy :as fz]
             [clojure.string :as str]))
 
-(pods/load-pod 'org.babashka/go-sqlite3 "0.1.0")
-(deps/add-deps '{:deps {honeysql/honeysql {:mvn/version "1.0.444"}}})
-
-(require '[pod.babashka.go-sqlite3 :as sqlite]
-         '[honeysql.core :as sql])
-
 (def db (let [path (-> (edn/read-string (slurp "bb.edn"))
-                       :db-path
-                       fs/expand-home)]
-          (if (fs/exists? path)
-            (str path)
+                       :db-path)]
+          (if (and path (fs/exists? path) (seq path))
+            (str (fs/expand-home path))
             "db/global_airports_sqlite.db")))
-
-
 
 (defn- make-query-space [db]
   (reduce (fn [q-space entry]

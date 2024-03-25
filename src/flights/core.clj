@@ -6,7 +6,7 @@
             [cheshire.core :as json]
             [babashka.cli :as cli]))
 
-(defn make-message [{:keys [distance] :as data}]
+(defn flight-data-message [{:keys [distance] :as data}]
   (let [loc-msg      (message/oirgin-and-destination-msg data)
         distance-msg (str "Approximate Distance: " (int distance) " km")
         time-msg     (message/flight-time-msg data)
@@ -33,7 +33,7 @@
       (println (str "Not Found: " (if loc1 q2 q1))))))
 
 (defn flight-message [queries]
-  (make-message (flight-data queries)))
+  (flight-data-message (flight-data queries)))
 
 (def spec {:airports {:ref   "<city>"
                       :desc  "Lookup airports based on <city> query"
@@ -56,8 +56,6 @@
        "\n\nExample: flights -a 'New York' (returns list of new york airports)\n"
        "Example: flights -d json 'new york' 'paris' (returns flight info in json format)\n"
        "Example: flights -d edn -c 'germany' (returns cities in Germany in edn format)"))
-
-;; (defn re-order-args [opts])
 
 ;; TODO standardise keys in data outputs
 (defn handle-data-format [fmt data]
@@ -92,4 +90,5 @@
           (not= (count (:args args)) 2) (println (str "Please provide an origin and a destination.\n"))
           :else                         (println (flight-message (:args args)))))))
 
+;; Init function
 (-main *command-line-args*)
