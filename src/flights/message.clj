@@ -67,5 +67,6 @@
                           co2-difference-recommended]}]
   (str/join "\n"
             [(personal-co2-usage-bar co2-personal co2-percentage-annual-avg)
-             co2-annual-avg-bar
-             (recommended-co2-bar)]))
+             (recommended-co2-bar)
+             co2-annual-avg-bar]))
+             

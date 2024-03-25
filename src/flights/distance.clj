@@ -30,9 +30,18 @@
 
 
 ;; Average Air speed - 880–926 km/h
-(def air-speed [740 900])
+;; Average Air speed - 885-965 km/h
+;; But, some distance is covered in take-off and landing and would need
+;; to be factored in here ...
+;; So, randomly reduced a little
+(def air-speed [740 850])
 
 (def take-off-and-landing-time 0.5)
+
+;; Alternative - based on a query of some google searches for specific flight times/distances.
+(def avg-air-speed [650 700])
+
+
 
 (defn generate-flight-data [loc1 loc2]
   (let [distance         (-> (distance loc1 loc2)
@@ -46,5 +55,6 @@
      :co2-percentage-annual-avg  (int (* 100 (/ co2-em carbon/avg-person-annual-emissions)))
      :co2-difference-recommended diff-recommended
      :distance                   distance
+     ;; :flight-time (map #(/ distance %) (reverse avg-air-speed))}))
      :flight-time                (map #(+ (/ distance %) take-off-and-landing-time)
                                       (reverse air-speed))}))

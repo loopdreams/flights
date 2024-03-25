@@ -13,11 +13,13 @@
 ;; Source - https://www.umweltbundesamt.de/daten/klima/treibhausgas-emissionen-in-der-europaeischen-union#hauptverursacher
 (def recommended-annual-avg 0.6e3)
 
-(defn- total-co2-emitted [distance]
+(defn- total-co2-emitted
+  "The '3.16' is the 'emissions factor'"
+  [distance]
   (*
-   (+ (* distance avg-fuel-usage-per-km)
+   (+ (* distance avg-fuel-usage-per-km) ;; this should prob be adjusted for shorted distance after takeoff/landing
       avg-fuel-usage-takeoff-landing)
-   3.1))
+   3.16))
 
 (defn- personal-co2-contribution [total-c02]
   (/ total-c02 avg-no-passengers))

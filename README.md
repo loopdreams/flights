@@ -24,14 +24,14 @@ Once babashka is installed, to run the program first clone this repo:
 
 ``` sh
 
-git clone [repo-name]
+git clone https://github.com/loopdreams/flights.git
 
 ```
 
 Then, `cd` into the repo and  just run `bb` followed by the name of the main file and the relevant arguments (detailed below).
 
 ``` sh
-bb airports 'New York' 'Paris'
+bb flights 'New York' 'Paris'
 ```
 
 ## Usage
@@ -75,7 +75,7 @@ If you want to search for the names of specific airports within a city, you can 
 bb flights -a 'Berlin'
 ```
 
-Similarly, if you want to search for all the cities within a country, you can use the `-c` flat (for 'cities'):
+Similarly, if you want to search for all the cities within a country, you can use the `-c` flag (for 'cities'):
 
 ``` sh
 bb flights -c 'Germany'
@@ -89,4 +89,68 @@ If you would like to use the functionality of this program within another pipeli
 bb flights -d :json 'Warsaw' 'Dublin' | jq "."
 ```
 
-## Adapting and Building
+## Modifying and Building
+
+The main file, `flights` depends on the `sqlite` database that is stored in the `db` folder. If you would like to turn this script into a standalone utility, you could do something along the lines of the following.
+
+Example: storing the script in `.local/bin/flights`
+
+1. Set the name of the db path in the `bb.edn` file, next to the key `:db-path`
+
+``` edn
+:db-path "~/.local/bin/flights/db/global_airports_sqlite.db"
+```
+
+2. Remove the existing `flights` file and generate a new one with:
+
+``` sh
+bb build
+```
+
+3. Add the following to the top of the `flights` file:
+
+``` sh
+#!/usr/bin/env bb
+```
+
+4. Copy/move the `flights` file and the `db` folder to `.local/bin/flights`
+
+5. Make the `flights` file executable 
+
+``` sh
+chmod +x ~/.local/bin/flights/flights
+```
+
+Now you can run the 'flights' command from anywhere. 
+
+I haven't built any cli utilities before, so I am not very well versed in best practices regarding the procedures for automatically installing scripts/resources. The above steps are a bit cumbersome and could be easily automated. If anyone has any suggestions please reach out.
+
+## Calculations
+
+The script has three kinds of calculations, distance (based on latitude and longitude), flight-times (based on distance) and carbon cost (based on distance). I am not an expert on these areas are relied heavily on the types of calculations used in already-existing online tools (cited below). It is not easy to calculate the flight-time based only on distance, so this is the weakest area. 
+
+By coincidence, I went on holiday during the month of March and flew from Dublin to Salzburg. I timed how long the journey took from when the wheels left the ground until we landed. It took 1 hour and 55 minutes to get there and 2 hours and 21 minutes to return. A pretty significant difference! This script is very simple and does not account for these kinds of differences (depending on direction of travel, etc.)
+
+### Distance
+
+The calculations for distance were based on reading through [this website (movable-type.co.uk)](https://www.movable-type.co.uk/scripts/latlong.html), and used the **haversine forumula**.
+
+### Flight Time 
+
+As mentioned above, calculating flight times was very difficult, due to the high number of variables. In the end, I simple went for using the average air speed (found on google) and reducing it down a bit (to account for the distance covered by takeoff/landing periods of flight) and then adding 30 mins for the take off and landing. It was very approximate! But, cross checking it with some google results, it does line up in a lot of cases, the main problem is that for long distances the suggested range becomes too wide to be in any way useful (of course, for very long distances there usually aren't single/non-connecting flights anyway...)
+
+### Carbon Cost
+
+While doing this exercise, I discovered that there were quite a few websites dedicated to calculating the carbon cost of flights, and also offering the ability to 'offset' this cost through some kind of payment. I didn't look too much into the site themselves, but I did borrow from this one site - [co2.myclimate.org](https://co2.myclimate.org/en/flight_calculators/new) - in how they represented the carbon cost alongside the *maximum CO2* that a single person should produce in a year to stop climate change and the *average annual* amount of CO2 produced by a single person in the EU.
+
+Main assumptions were:
+
+- Average fuel usage per kilometer: 12l
+- Average fuel usage for takeoff/landing: 1,100l
+- Average number of passengers on a commercial flight: 300
+- Average EU person annual CO2 emissions: 7.77 tons
+- Annual amount recommended for combating climate change: 0.6 tons
+- Emissions Factor: 3.16
+
+The 'emissions factor' is the amount of CO2 produced per kg of jet fuel consumed.
+
