@@ -54,9 +54,11 @@ Destination: Getafe Airport in Madrid, Spain
 
 Approximate Distance: 1877 km
 
-Estimated Flight Time: Between 2 hours, 35 minutes and 3 hours, 2 minutes
+Estimated Flight Time: Between 2 hours, 42 minutes and 3 hours, 2 minutes
 
-Approximately 244 kg of CO2 emitted, which is around 3% of a EU person's annual average emissions and -355kg below the necessary average annual emissions recommended to stop climate change.
+[■] Carbon cost: 248 kg / 3% of annual EU avg
+[■■■] Recommended annual avg: 600.0 kg
+[■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■] EU Person Annual Avg: 7770 kg
 ------------------------------------------------
 ```
 
@@ -81,7 +83,7 @@ Similarly, if you want to search for all the cities within a country, you can us
 bb flights -c 'Germany'
 ```
 
-### Returning data
+### API/Returning data
 
 If you would like to use the functionality of this program within another pipeline, you can also request for it to return the response in either `json` or `edn` format by using the `-d` flag. For example:
 
@@ -127,9 +129,32 @@ I haven't built any cli utilities before, so I am not very well versed in best p
 
 ## Calculations
 
-The script has three kinds of calculations, distance (based on latitude and longitude), flight-times (based on distance) and carbon cost (based on distance). I am not an expert on these areas are relied heavily on the types of calculations used in already-existing online tools (cited below). It is not easy to calculate the flight-time based only on distance, so this is the weakest area. 
+The script has three kinds of calculations:
+
+- distance (based on latitude and longitude)
+- flight-times (based on distance) 
+- carbon cost (based on distance). 
+
+I am not an expert on these areas are relied heavily on the types of calculations used in already-existing online tools (cited below). It is not easy to calculate the flight-time based only on distance, so this is the weakest area. 
 
 By coincidence, I went on holiday during the month of March and flew from Dublin to Salzburg. I timed how long the journey took from when the wheels left the ground until we landed. It took 1 hour and 55 minutes to get there and 2 hours and 21 minutes to return. A pretty significant difference! This script is very simple and does not account for these kinds of differences (depending on direction of travel, etc.)
+
+Here is what the script returns for the same flight:
+
+``` text
+------------------------------------------------
+Origin: Dublin Airport in Dublin, Ireland
+Destination: Salzburg Airport in Salzburg, Austria
+
+Approximate Distance: 1490 km
+
+Estimated Flight Time: Between 2 hours, 15 minutes and 2 hours, 30 minutes
+
+[■] Carbon cost: 200 kg / 2% of annual EU avg
+[■■■] Recommended annual avg: 600.0 kg
+[■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■] EU Person Annual Avg: 7770 kg
+------------------------------------------------
+```
 
 ### Distance
 
@@ -137,16 +162,16 @@ The calculations for distance were based on reading through [this website (movab
 
 ### Flight Time 
 
-As mentioned above, calculating flight times was very difficult, due to the high number of variables. In the end, I simple went for using the average air speed (found on google) and reducing it down a bit (to account for the distance covered by takeoff/landing periods of flight) and then adding 30 mins for the take off and landing. It was very approximate! But, cross checking it with some google results, it does line up in a lot of cases, the main problem is that for long distances the suggested range becomes too wide to be in any way useful (of course, for very long distances there usually aren't single/non-connecting flights anyway...)
+As mentioned above, calculating flight times was very difficult, due to the high number of variables. In the end, I simply went for using the average air speed (found on google), reduced it down a bit to account for the distance covered by takeoff/landing periods of flight, and then adding 30 mins for the take off and landing. It was very approximate! But, cross checking it with some google results, it does line up in a lot of cases. The main problem is that for long distances the suggested range becomes too wide to be in any way useful (of course, for very long distances there usually aren't single/non-connecting flights anyway...)
 
 ### Carbon Cost
 
-While doing this exercise, I discovered that there were quite a few websites dedicated to calculating the carbon cost of flights, and also offering the ability to 'offset' this cost through some kind of payment. I didn't look too much into the site themselves, but I did borrow from this one site - [co2.myclimate.org](https://co2.myclimate.org/en/flight_calculators/new) - in how they represented the carbon cost alongside the *maximum CO2* that a single person should produce in a year to stop climate change and the *average annual* amount of CO2 produced by a single person in the EU.
+While doing this exercise, I discovered that there were quite a few websites dedicated to calculating the carbon cost of flights, and also offering the ability to 'offset' this cost through some kind of payment. I didn't look too much into the sites themselves, but I did borrow from this one site - [co2.myclimate.org](https://co2.myclimate.org/en/flight_calculators/new) - in how they represented the carbon cost alongside the *maximum CO2* that a single person should produce in a year to stop climate change and the *average annual* amount of CO2 produced by a single person in the EU.
 
 Main assumptions were:
 
-- Average fuel usage per kilometer: 12l
-- Average fuel usage for takeoff/landing: 1,100l
+- Average fuel usage per kilometer: 12kg
+- Average fuel usage for takeoff/landing: 1,100kg
 - Average number of passengers on a commercial flight: 300
 - Average EU person annual CO2 emissions: 7.77 tons
 - Annual amount recommended for combating climate change: 0.6 tons
