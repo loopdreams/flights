@@ -1,1 +1,2 @@
-{:paths ["src" "db"]}
+{:paths ["src" "db"]
+ :db-path nil}
