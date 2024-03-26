@@ -57,7 +57,6 @@
        "Example: flights -d json 'new york' 'paris' (returns flight info in json format)\n"
        "Example: flights -d edn -c 'germany' (returns cities in Germany in edn format)"))
 
-;; TODO standardise keys in data outputs
 (defn handle-data-format [fmt data]
   (case fmt
     :edn data

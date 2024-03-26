@@ -1,17 +1,11 @@
 (ns flights.db
-  (:require [babashka.fs :as fs]
-            [pod.babashka.go-sqlite3 :as sqlite]
+  (:require [pod.babashka.go-sqlite3 :as sqlite]
             [honeysql.core :as sql]
-            [clojure.edn :as edn]
             [flights.fuzzy :as fz]
             [clojure.string :as str]))
 
-(def db (let [path (-> (edn/read-string (slurp "bb.edn"))
-                       :db-path)]
-          (if (and path (fs/exists? path) (seq path))
-            (str (fs/expand-home path))
-            "db/global_airports_sqlite.db")))
-
+(def db "db/global_airports_sqlite.db")
+           
 (defn- make-query-space [db]
   (reduce (fn [q-space entry]
             (let [{:keys [name city country]} entry]

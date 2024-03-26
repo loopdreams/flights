@@ -1,5 +1,4 @@
 {:paths ["src" "db"]
- :db-path nil
  :pods {org.babashka/go-sqlite3 {:version "0.1.0"}}
  :deps {honeysql/honeysql {:mvn/version "1.0.444"}}
  :tasks {build (do (shell "bb" "uberscript" "flights" "src/flights/core.clj")

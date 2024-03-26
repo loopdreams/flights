@@ -10,7 +10,7 @@ The OFFLFIRSOCH challenge, which expands to OFFLine-FIRst SOftware CHallenge, as
 
 I chose to write a cli utility for looking up **information about flight times and distances.** There are many online calculators for this sort of thing, but as Solderpunk pointed out, the spirit of the challenge lies also in replicating this kinds of tools that are abundant on the web, but which are entirely useless when there is no internet connection.
 
-The project relies heavily on the following datasource:
+The project relies heavily on the following data source:
 
 - [Global Airport Database](https://www.partow.net/miscellaneous/airportdatabase/)
 
@@ -88,7 +88,7 @@ bb flights -c 'Germany'
 If you would like to use the functionality of this program within another pipeline, you can also request for it to return the response in either `json` or `edn` format by using the `-d` flag. For example:
 
 ``` sh
-bb flights -d :json 'Warsaw' 'Dublin' | jq "."
+bb flights -d :json 'Warsaw' 'Dublin' | jq ".distance"
 ```
 
 ## Modifying and Building
@@ -97,10 +97,10 @@ The main file, `flights` depends on the `sqlite` database that is stored in the 
 
 Example: storing the script in `.local/bin/flights`
 
-1. Set the name of the db path in the `bb.edn` file, next to the key `:db-path`
+1. Modify the 'db' variable in the `src/flights/db.clj` file to something like:
 
-``` edn
-:db-path "~/.local/bin/flights/db/global_airports_sqlite.db"
+``` clojure
+(def db "/Users/[username]/.local/bin/flights/db/global_airports_sqlite.db")
 ```
 
 2. Remove the existing `flights` file and generate a new one with:
@@ -135,7 +135,7 @@ The script has three kinds of calculations:
 - flight-times (based on distance) 
 - carbon cost (based on distance). 
 
-I am not an expert on these areas are relied heavily on the types of calculations used in already-existing online tools (cited below). It is not easy to calculate the flight-time based only on distance, so this is the weakest area. 
+I am not an expert on these areas and relied heavily on the types of calculations used in already-existing online tools (cited below). It is not easy to calculate the flight-time based only on distance, so this is the weakest area. 
 
 By coincidence, I went on holiday during the month of March and flew from Dublin to Salzburg. I timed how long the journey took from when the wheels left the ground until we landed. It took 1 hour and 55 minutes to get there and 2 hours and 21 minutes to return. A pretty significant difference! This script is very simple and does not account for these kinds of differences (depending on direction of travel, etc.)
 
@@ -158,7 +158,7 @@ Estimated Flight Time: Between 2 hours, 15 minutes and 2 hours, 30 minutes
 
 ### Distance
 
-The calculations for distance were based on reading through [this website (movable-type.co.uk)](https://www.movable-type.co.uk/scripts/latlong.html), and used the **haversine forumula**.
+The calculations for distance were based on reading through [this website (movable-type.co.uk)](https://www.movable-type.co.uk/scripts/latlong.html), and used the **haversine formula**.
 
 ### Flight Time 
 
