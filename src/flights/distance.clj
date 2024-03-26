@@ -1,7 +1,6 @@
 (ns flights.distance
   (:require [flights.carbon :as carbon]))
 
-
 ;; Calculating Distance between lat and lon
 
 ;; Earth's redius - 6,371km
@@ -38,11 +37,6 @@
 
 (def take-off-and-landing-time 0.5)
 
-;; Alternative - based on a query of some google searches for specific flight times/distances.
-(def avg-air-speed [650 700])
-
-
-
 (defn generate-flight-data [loc1 loc2]
   (let [distance         (-> (distance loc1 loc2)
                              (/ 1000)
@@ -55,6 +49,5 @@
      :co2-percentage-annual-avg  (int (* 100 (/ co2-em carbon/avg-person-annual-emissions)))
      :co2-difference-recommended diff-recommended
      :distance                   distance
-     ;; :flight-time (map #(/ distance %) (reverse avg-air-speed))}))
      :flight-time                (map #(+ (/ distance %) take-off-and-landing-time)
                                       (reverse air-speed))}))

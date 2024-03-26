@@ -63,10 +63,8 @@
    " Recommended annual avg: " carbon/recommended-annual-avg
    " kg"))
 
-(defn carbon-msg [{:keys [co2-personal co2-percentage-annual-avg
-                          co2-difference-recommended]}]
+(defn carbon-msg [{:keys [co2-personal co2-percentage-annual-avg]}]
   (str/join "\n"
             [(personal-co2-usage-bar co2-personal co2-percentage-annual-avg)
              (recommended-co2-bar)
              co2-annual-avg-bar]))
-             
