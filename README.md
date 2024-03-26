@@ -48,7 +48,7 @@ bb flights 'Berlin' 'Madrid'
 Returns the following text to the terminal:
 
 ``` text
-------------------------------------------------
+-------------------------------------------------------------------
 Origin: Tegel Airport in Berlin, Germany
 Destination: Getafe Airport in Madrid, Spain
 
@@ -59,7 +59,7 @@ Estimated Flight Time: Between 2 hours, 42 minutes and 3 hours, 2 minutes
 [■] Carbon cost: 248 kg / 3% of annual EU avg
 [■■■] Recommended annual avg: 600.0 kg
 [■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■] EU Person Annual Avg: 7770 kg
-------------------------------------------------
+-------------------------------------------------------------------
 ```
 
 At times, the queries may return unexpected answers. Feel free to be a bit more specific, for example:
@@ -142,7 +142,7 @@ By coincidence, I went on holiday during the month of March and flew from Dublin
 Here is what the script returns for the same flight:
 
 ``` text
-------------------------------------------------
+-------------------------------------------------------------------
 Origin: Dublin Airport in Dublin, Ireland
 Destination: Salzburg Airport in Salzburg, Austria
 
@@ -153,7 +153,7 @@ Estimated Flight Time: Between 2 hours, 15 minutes and 2 hours, 30 minutes
 [■] Carbon cost: 200 kg / 2% of annual EU avg
 [■■■] Recommended annual avg: 600.0 kg
 [■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■] EU Person Annual Avg: 7770 kg
-------------------------------------------------
+-------------------------------------------------------------------
 ```
 
 ### Distance

@@ -11,13 +11,13 @@
         distance-msg (str "Approximate Distance: " (int distance) " km")
         time-msg     (message/flight-time-msg data)
         carbon-msg   (message/carbon-msg data)]
-    (str "------------------------------------------------\n"
+    (str "-------------------------------------------------------------------\n"
          (str/join "\n\n"
                    [loc-msg
                     distance-msg
                     time-msg
                     carbon-msg])
-         "\n------------------------------------------------")))
+         "\n-------------------------------------------------------------------")))
 
 (defn cities-data [query]
   (db/query-cities query))
