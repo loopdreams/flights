@@ -8,7 +8,7 @@ The OFFLFIRSOCH challenge, which expands to OFFLine-FIRst SOftware CHallenge, as
 
 > By this I mean it either makes no use of the internet whatsoever and happily functions entirely offline without even being aware that anything "unusual" is happening, or else it does make use of the internet but is fundamentally designed around the assumption that the internet is not always available and maintains 90% or more of its functionality when used offline, and will continue to do so no matter whether it gets internet access once per week, once per month, once per year or even longer.
 
-I chose to write a cli utility for looking up **information about flight times and distances.** There are many online calculators for this sort of thing, but as Solderpunk pointed out, the spirit of the challenge lies also in replicating this kinds of tools that are abundant on the web, but which are entirely useless when there is no internet connection.
+I chose to write a cli utility for looking up **information about flight times and distances.** There are many online calculators for this sort of thing, but as Solderpunk pointed out, the spirit of the challenge lies also in replicating the kinds of tools that are abundant on the web, but which are entirely useless when there is no internet connection.
 
 The project relies heavily on the following data source:
 
@@ -18,9 +18,9 @@ The project relies heavily on the following data source:
 
 This software runs using `babashka`, a version of `clojure` that uses the `GraalVM`. You will need to have `babashka` installed to run it.
 
-Luckily, babashka is very easy to install with one line. [Details can be found here](https://github.com/babashka/babashka?tab=readme-ov-file#quickstart)
+Luckily, babashka is very easy to install with one line. [Details on how to install babashka can be found here](https://github.com/babashka/babashka?tab=readme-ov-file#quickstart)
 
-Once babashka is installed, to run the program first clone this repo:
+Once babashka is installed, clone this repo:
 
 ``` sh
 
@@ -67,7 +67,6 @@ At times, the queries may return unexpected answers. Feel free to be a bit more 
 ``` sh
 bb flights 'Berlin, Germany' 'John F Kennedy, New York'
 ```
-
 
 ### Searching for City and Airport names
 
